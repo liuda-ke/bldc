@@ -25,7 +25,7 @@ jobs:
 
     # 可选：上传编译产物
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@4.1.9
       with:
         name: firmware-binaries
         path: |
