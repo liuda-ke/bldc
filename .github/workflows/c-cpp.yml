@@ -1,16 +1,32 @@
-name: C/C++ CI
+name: C Project Build
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ main, master ]
 
 jobs:
-  build:
-
+  build-firmware:
     runs-on: ubuntu-latest
 
     steps:
-    - name: make
+    - name: Install Build Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential make
+
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Compile Firmware
       run: make fsesc_75_200_alu
+
+    # 可选：上传编译产物
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: firmware-binaries
+        path: |
+          *.bin   # 替换为实际生成的二进制文件路径
+          *.elf   # 其他可能生成的固件格式
