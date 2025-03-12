@@ -31,4 +31,9 @@ jobs:
           BIN_PATH=$(find . -path './build/fsesc_75_200_alu/*.bin' | head -1)
           [ -n "$BIN_PATH" ] || (echo "##[error]文件路径不匹配" && exit 1)
           [ -f "$BIN_PATH" ] || (echo "##[error]文件不存在" && exit 1)
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: fsesc_75_200_alu_binaries  # 构建产物的名称
+          path: ${{ steps.check-build.outputs.bin_path }}  # 构建产物的路径
         
