@@ -1,33 +1,34 @@
-name: C Project Build
+name: Build C Project
 
 on:
+  # 触发条件：当有 push 或 pull_request 时自动运行
   push:
-    branches: [ main, master ]
+    branches: [main, master]  # 指定分支
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
-  build-firmware:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest  # 使用最新的 Ubuntu 环境
 
     steps:
-    - name: Install Build Dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential make
+      - name: Checkout code
+        uses: actions/checkout@v3  # 检出代码
 
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Set up build environment
+        run: |
+          sudo apt-get update  # 更新系统包
+          sudo apt-get install -y build-essential  # 安装编译工具链
+          sudo apt-get install -y make  # 安装 make 工具
 
-    - name: Compile Firmware
-      working-directory: src  # 指定子目录
-      run: make fsesc_75_200_alu
+      - name: Build the project
+        run: make fsesc_75_200_alu  # 执行编译命令
 
-    # 可选：上传编译产物
-    - name: Upload Artifact
-      uses: actions/upload-artifact@4.1.9
-      with:
-        name: firmware-binaries
-        path: |
-          *.bin   # 替换为实际生成的二进制文件路径
-          *.elf   # 其他可能生成的固件格式
+      - name: Check build output
+        run: |
+          if [ -f fsesc_75_200_alu ]; then
+            echo "Build succeeded!"
+          else
+            echo "Build failed!"
+            exit 1
+          fi
