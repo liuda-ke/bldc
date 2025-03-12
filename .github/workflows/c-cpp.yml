@@ -20,6 +20,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Compile Firmware
+      working-directory: src  # 指定子目录
       run: make fsesc_75_200_alu
 
     # 可选：上传编译产物
