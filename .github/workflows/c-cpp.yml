@@ -28,9 +28,7 @@ jobs:
 
       - name: Check build output
         run: |
-          if [ -f fsesc_75_200_alu ]; then
-            echo "Build succeeded!"
-          else
-            echo "Build failed!"
-            exit 1
-          fi
+          BIN_PATH=$(find . -path './build/fsesc_75_200_alu/*.bin' | head -1)
+          [ -n "$BIN_PATH" ] || (echo "##[error]文件路径不匹配" && exit 1)
+          [ -f "$BIN_PATH" ] || (echo "##[error]文件不存在" && exit 1)
+        
