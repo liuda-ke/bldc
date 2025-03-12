@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: fsesc_75_200_alu_binaries
-          path: ${{ steps.check-build.outputs.bin_path }}  # 使用动态路径
+          path: ./build/fsesc_75_200_alu/*.bin  # 直接指定路径
           if-no-files-found: warn
           compression-level: 6
           overwrite: false
