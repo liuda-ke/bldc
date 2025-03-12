@@ -21,6 +21,8 @@ jobs:
           sudo apt-get install -y build-essential  # 安装编译工具链
           sudo apt-get install -y make  # 安装 make 工具
 
+      - name: install arm_sdk_install
+        run: make arm_sdk_install
       - name: Build the project
         run: make fsesc_75_200_alu  # 执行编译命令
 
